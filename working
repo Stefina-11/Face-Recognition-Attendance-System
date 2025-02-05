@@ -1,0 +1,47 @@
+The attendance system is designed to recognize faces in real time using a webcam, match them with stored face data, and log attendance in an Excel sheet. Below is a step-by-step breakdown of how the system works:
+
+1. Initialization
+The system initializes the webcam (cv2.VideoCapture(0)) to capture video frames.
+It checks whether the camera is properly connected. If not, an error is displayed.
+2. Loading Known Faces
+The program reads images from a predefined folder (D:\known_faces).
+Each image filename follows the format:
+"Name[RRN].jpg"
+Example: John Doe[123456].jpg
+Using face_recognition.face_encodings(), it extracts the unique facial features (encodings) from each image.
+The extracted data is stored in three lists:
+known_face_encodings → Stores facial encodings
+known_face_names → Stores names of individuals
+known_face_rrns → Stores corresponding Roll Registration Numbers (RRN)
+3. Real-time Face Recognition
+The system continuously captures live video frames from the webcam.
+Each frame is converted into an RGB format (required for face recognition).
+The system detects all faces in the frame using face_recognition.face_locations().
+It extracts the face encodings of detected faces using face_recognition.face_encodings().
+4. Matching Faces with Known Data
+For each detected face, it compares the encoding with stored encodings using face_recognition.compare_faces().
+If a match is found:
+The system retrieves the person's name and RRN.
+If attendance is not already marked for the day, it proceeds to mark it in the Excel sheet.
+If no match is found, the face is labeled as "Unknown".
+5. Marking Attendance in Excel
+The program checks if today’s date column exists in the Excel sheet:
+
+If not, a new column is created for the date.
+It searches for the student's name and RRN in the sheet:
+
+If found, attendance is marked as "✔".
+If not, a new row is added with the student's details and attendance.
+The Excel file is then saved to ensure data is not lost.
+
+6. Displaying Results on Screen
+A rectangle is drawn around detected faces using cv2.rectangle().
+The recognized person's name is displayed using cv2.putText().
+The live camera feed is shown in a window (cv2.imshow()).
+7. Opening the Excel File Automatically
+Once attendance is logged, the system automatically opens the Excel file in a new window using subprocess.Popen().
+This ensures the user can view the updated attendance sheet.
+8. Exit Conditions
+The system stops running when:
+Attendance is successfully logged.
+The user manually presses ‘q’ on the keyboard.
