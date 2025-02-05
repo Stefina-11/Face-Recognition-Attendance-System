@@ -1,0 +1,37 @@
+Key Features:
+
+Face Recognition:
+
+Uses the face_recognition library to detect and recognize faces.
+Loads known face encodings from a specified directory (D:\known_faces).
+Matches detected faces with stored face data.
+Attendance Management (Excel Integration):
+
+Maintains an attendance log in an Excel file (Attendance.xlsx).
+If a recognized face is detected, it marks attendance for that individual.
+Automatically adds new entries for unregistered students.
+Ensures duplicate attendance entries for the same day are not recorded.
+Camera Integration:
+
+Captures live video feed using OpenCV (cv2.VideoCapture).
+Detects faces in real time and processes them for recognition.
+Threaded Excel Access:
+
+Opens the attendance Excel file in a separate thread using subprocess.Popen.
+Ensures smooth execution without delaying face recognition.
+Graphical Feedback:
+
+Displays live camera feed with detected faces.
+Marks recognized faces with a green rectangle and displays their names.
+If an unknown face is detected, it is labeled "Unknown".
+User Interaction:
+
+Allows manual termination by pressing ‘q’ on the keyboard.
+Proper cleanup of camera resources and windows when the program ends.
+
+ # Required Dependencies:
+opencv-python (for video capture and display)
+face_recognition (for face detection and recognition)
+openpyxl (for handling Excel files)
+os and subprocess (for file operations)
+threading (to prevent UI freezing when opening Excel)
